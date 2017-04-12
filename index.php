@@ -313,6 +313,7 @@ switch (ENVIRONMENT)
  * And away we go...
  */
 require_once BASEPATH.'core/CodeIgniter.php';
+
 //require 'vendor/autoload.php';
 //require 'application/aws/aws.phar';
 //require 'application/aws/aws-autoloader.php';
