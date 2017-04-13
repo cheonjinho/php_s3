@@ -17,7 +17,7 @@ class Database extends CI_Model {
         }
     }
 
-    public function get($id) {
+    public function get_id($id) {
         return $this->db->get_where($this->table_name, array($this->primary_key => $id))->row();
     }
 

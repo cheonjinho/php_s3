@@ -2,8 +2,15 @@
 
 class Upload extends CI_Controller
 {
+    function __construct()
+    {
+        // this is your constructor
+        parent::__construct();
+        $this->load->helper('form');
+        $this->load->helper('url');
+    }
 
-    public function index() {
+    public function imgupload() {
         $this->load->view('uploadfile');
     }
 
@@ -14,7 +21,7 @@ class Upload extends CI_Controller
             $this->load->model(array('Database'));
             $this->Database->insert($form_data['product']);
             $data['list'] = $this->Database->get_all();
-            print_r('Created successfully');
+            redirect('');
         } else {
             print_r('Created failed');
         }
@@ -33,24 +40,24 @@ class Upload extends CI_Controller
     }
 
 
-    public function list1()
+    public function list()
     {
-        
-        $params = $this->input->get();
+        $this->load->model(array('Database'));
+        $data['list'] = $this->Database->get_all();
+        //$params = $this->Database->get_all();
         //print_r($params);
 
-        $per_page = $params['per_page'];
-        $offset = $params['per_page'] * ($params['page']-1);
+        //$per_page = $params['per_page'];
+        //$offset = $params['per_page'] * ($params['page']-1);
 
-        $data['page'] = $params['page'];
-        $data['per_page'] = $per_page;
+        //$data['page'] = $params['page'];
+        //$data['per_page'] = $per_page;
 
-        $this->load->model(array('Database'));
-        $total_count = $this->Database->get_count_by_params('', $params);
-        $data['total_count'] = $total_count;
-        $data['max_page'] = round($total_count/$per_page+0.49);
-        $data['list'] = $this->Database->get_all_by_params('', $params, '', $per_page, $offset);
-        $this->load->view('test/list', $data);
+        //$total_count = $this->Database->get_count_by_params('', $params);
+        //$data['total_count'] = $total_count;
+        //$data['max_page'] = round($total_count/$per_page+0.49);
+        //$data['list'] = $this->Database->get_all_by_params('', $params, '', $per_page, $offset);
+        $this->load->view('products_view', $data);
 
     }
 }

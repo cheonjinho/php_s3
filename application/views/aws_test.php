@@ -7,38 +7,37 @@
 </head>
 <body>
 	<h1>이미지 파일 업로드 테스트</h1>
+    <a href="Upload/list">상품보기</a>
 
-    <form id="new_user" action="Upload/create" accept-charset="UTF-8" method="post">
-
+    <form id="new_product" action="Upload/create" accept-charset="UTF-8" method="post">
         <input name="utf8" type="hidden" value="✓">
-          <div class="form-inputs">
+        <div class="form-inputs">
             <label>이름</label>
             <input autofocus="autofocus" type="text" value="" name="product[title]" id="title">
-          </div>
-          <br>
-          <div class="form-inputs">
+        </div>
+        <br>
+        <div class="form-inputs">
             <label>설명</label>
             <input autofocus="autofocus" type="text" value="" name="product[description]" id="description">
-          </div>
-          <br>
-          <div class="form-inputs">
+        </div>
+        <br>
+        <div class="form-inputs">
             <label>카테고리1</label>
             <input autofocus="autofocus" type="text" value="" name="product[type_a]" id="type_a">
-          </div>
-          <br>
-          <div class="form-inputs">
+        </div>
+        <br>
+        <div class="form-inputs">
             <label>카테고리2</label>
             <input autofocus="autofocus" type="text" value="" name="product[type_b]" id="type_b">
-          </div>
-          <br>
-          <div class="form-inputs">
+        </div>
+        <br>
+        <div class="form-inputs">
             <label>가격</label>
             <input autofocus="autofocus" type="text" value="" name="product[price]" id="price">
-          </div>
-          <br>
-          <div class="form-actions">
-            <input type="submit" value="완료" data-disable-with="완료">
-          </div>
+        </div>
+        <div class="form-inputs">
+            <input autofocus="autofocus" type="hidden" value="" name="product[url]" id="url">
+        </div>
     </form>
 
 
@@ -60,8 +59,9 @@
     
     <div id="uploaded_img"></div>
 
+
 	<script>
-		
+        
 		$(function() {
         /// 문서가 모두 로드되고나서 실행되는 스크립트
 
@@ -70,7 +70,11 @@
             	var inputFile = $("#input_file")[0].files[0];
             	var input_title = $("#input_title").val();
             	var input_memo = $("#input_memo").val();
-
+                <?php
+                    $date = new DateTime();
+                    $timeStamp = $date->getTimestamp();
+                ?>
+                var input_time = <?php echo $timeStamp ?>;
 
                 /// 파라미터 검사
                 if(!inputFile)
@@ -94,11 +98,12 @@
                 formDataObj.append("input_file",inputFile);
                 formDataObj.append("input_title",input_title);
                 formDataObj.append("input_memo",input_memo);
+                formDataObj.append("input_time",input_time);
 
 
                 /// 네트워크 통신
                 $.ajax({
-                    url: "Upload",
+                    url: "Upload/imgupload",
                     type: "POST",
                     data : formDataObj,
                     cache: false,
@@ -106,6 +111,8 @@
                     processData: false,
 
                     success: function(data) {
+                        $('#url').val(input_time + inputFile.name);
+                        $('#new_product').submit();
                         $('#uploaded_img').html(data);
                         alert('success');
                     },

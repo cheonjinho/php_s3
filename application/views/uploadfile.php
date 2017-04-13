@@ -5,6 +5,7 @@
   $input_file = $_FILES["input_file"];
   $input_memo =  $_POST["input_memo"];
   $input_title =  $_POST["input_title"];
+  $input_time = $_POST["input_time"];
 
   if($input_file && $input_memo && $input_title) {
 		/// 업로드 가능한 파일 검사 --> 이미지
@@ -14,8 +15,8 @@
     // 현재 타임존 설정
   	date_default_timezone_set('Asia/Seoul');
     /// 타임스탬프 얻어옴
-  	$date = new DateTime();
-  	$timeStamp = $date->getTimestamp();
+  	//$date = new DateTime();
+  	$timeStamp = $input_time;
     /// 파일 타입이 이미지인지 검사
   	if ((($input_file["type"] == "image/png") || ($input_file["type"] == "image/jpg") || ($input_file["type"] == "image/jpeg"))  && in_array($file_extension, $validextensions)) {
         /// 에러인지 검사
@@ -57,7 +58,6 @@
           		]);
           	$returnURL = $result->get("@metadata")["effectiveUri"];
           	unlink($targetPath);
-            echo "<img src=" . $returnURL . ">";
           } catch (Aws\Exception\S3Exception $e) {
           	echo "There was an error uploading the file.\n";
           	print_r($e);
