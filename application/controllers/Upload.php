@@ -5,7 +5,6 @@ class Upload extends CI_Controller
 
     public function index() {
         $this->load->view('uploadfile');
-        print_r($returnURL);
     }
 
     public function create()
