@@ -89,7 +89,7 @@ $autoload['drivers'] = array();
 |
 |	$autoload['helper'] = array('url', 'file');
 */
-$autoload['helper'] = array('aws');
+$autoload['helper'] = array('aws', 'private');
 
 /*
 | -------------------------------------------------------------------
