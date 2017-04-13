@@ -57,17 +57,18 @@
           		]);
           	$returnURL = $result->get("@metadata")["effectiveUri"];
           	unlink($targetPath);
-          	echo $returnURL;
+            echo "<img src=" . $returnURL . ">";
           } catch (Aws\Exception\S3Exception $e) {
           	echo "There was an error uploading the file.\n";
-
           	print_r($e);
           }
         }
       }
     } else {
-    	echo "<span id='invalid'>***Invalid file Size or Type***<span>";
+    	echo '<p>' . $input_title . '</p>';
     }
+  } else {
+    echo '<p>Invaild Upload contents!</p>';
   }
 ?>
 
